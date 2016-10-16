@@ -5,7 +5,7 @@ package chat.model;
  * Create Date：2016/10/14
  */
 public class User {
-    private int numericCode;
+    private int userID;
     private String nickname;
     private String password;
     private String iconUrl;
@@ -14,12 +14,12 @@ public class User {
     private String address;
     private String email;
 
-    public int getNumericCode() {
-        return numericCode;
+    public int getUserID() {
+        return userID;
     }
 
-    public void setNumericCode(int numericCode) {
-        this.numericCode = numericCode;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
     public String getNickname() {
