@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/chattest?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/chat?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
     username: root
-    password: Xqf123
+    password: 521234
 
 server:
   port: 7777
@@ -10,5 +10,5 @@ server:
 flyway:
   enabled: true
 
-security:
-  ignore: '/**'
+#security:
+#  ignore: '/**'

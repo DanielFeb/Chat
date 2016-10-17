@@ -1,10 +1,7 @@
 package chat.controller;
 
 import chat.model.User;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author: Daniel
@@ -18,7 +15,7 @@ public class TestController {
     }
 
     @RequestMapping(value = "/post", method = RequestMethod.POST)
-    public String postMsg(User user) throws RuntimeException {
+    public String postMsg(@RequestBody User user) throws RuntimeException {
         return "Hello " + user.getNickname() + "!";
     }
 

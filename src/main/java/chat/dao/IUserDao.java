@@ -7,5 +7,11 @@ import chat.model.User;
  * Create Date：2016/10/16
  */
 public interface IUserDao {
+
     int create(User user);
+
+    User getByID(int userID);
+
+    String selectPw(int userID);
 }
+

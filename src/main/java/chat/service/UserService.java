@@ -25,4 +25,20 @@ public class UserService implements IUserService {
         return user.getUserID();
     }
 
+    public boolean loginToSys(int userID, String password) {
+//        if(userDao.selectPw(userID).equals(password) == true)
+//        {
+//            return true;
+//        }else {
+//            return false;
+//        }
+//        String pwd = userDao.selectPw(userID);
+//        return pwd != null && pwd.equals(password);
+
+        User user = userDao.getByID(userID);
+        return user != null && user.getPassword().equals(password);
+
+
+    }
+
 }

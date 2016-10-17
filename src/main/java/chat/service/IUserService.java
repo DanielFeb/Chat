@@ -8,4 +8,6 @@ import chat.model.User;
  */
 public interface IUserService {
     int signUpUserIntoSys(User user);
+
+    boolean loginToSys(int userID, String password);
 }
