@@ -2,9 +2,15 @@ package chat.service;
 
 import chat.dao.IUserDao;
 import chat.model.User;
-import chat.utils.ModelService;
+import chat.utils.IModelService;
+import chat.utils.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 /**
  * @author: Daniel
@@ -16,7 +22,20 @@ public class UserService implements IUserService {
     private IUserDao userDao;
 
     @Autowired
-    private ModelService modelService;
+    private IModelService modelService;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        int userID = Integer.parseInt(username);
+        if(userID <= 0){
+            throw new RuntimeException(Messages.NO_USER_LOGIN);
+        }
+        User user = userDao.getByID(userID);
+        ArrayList<SimpleGrantedAuthority> authorizations = new ArrayList<SimpleGrantedAuthority>();
+        authorizations.add(new SimpleGrantedAuthority("ROLE_GENERAL_USER"));
+        user.setAuthorities(authorizations);
+        return user;
+    }
 
     @Override
     public int signUpUserIntoSys(User user) {

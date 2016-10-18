@@ -14,6 +14,11 @@ public class TestController {
         return "Hello " + username + "!";
     }
 
+    @RequestMapping(value = "/testCredential",method = RequestMethod.GET)
+    public String testCredential(){
+        return "Hello credential!";
+    }
+
     @RequestMapping(value = "/post", method = RequestMethod.POST)
     public String postMsg(@RequestBody User user) throws RuntimeException {
         return "Hello " + user.getNickname() + "!";

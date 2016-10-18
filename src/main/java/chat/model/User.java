@@ -1,10 +1,17 @@
 package chat.model;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
 /**
  * @author: Daniel
  * Create Date：2016/10/14
  */
-public class User {
+public class User implements UserDetails {
     private int userID;
     private String nickname;
     private String password;
@@ -13,6 +20,41 @@ public class User {
     private String phone;
     private String address;
     private String email;
+    private ArrayList<SimpleGrantedAuthority> authorities;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(ArrayList<SimpleGrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
+
+    @Override
+    public String getUsername() {
+        return String.valueOf(userID);
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
     public int getUserID() {
         return userID;

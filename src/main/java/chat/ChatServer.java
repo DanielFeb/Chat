@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Create Date: 2016/10/14
  */
 @SpringBootApplication
-@MapperScan("team.ziz.chat.dao")
+@MapperScan("chat.dao")
 public class ChatServer {
     public static void main(String[] args){
         SpringApplication.run(ChatServer.class, args);

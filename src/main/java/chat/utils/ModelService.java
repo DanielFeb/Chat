@@ -9,7 +9,8 @@ import java.lang.reflect.Field;
  * Create Date：2016/10/16
  */
 @Service
-public class ModelService {
+public class ModelService implements IModelService {
+    @Override
     public void replaceNullValues(Object obj) {
         Class cls = obj.getClass();
         System.out.println("ModelService replaceNullValues of cls:" + cls);
@@ -32,6 +33,5 @@ public class ModelService {
                 }
             }
         }
-
     }
 }
