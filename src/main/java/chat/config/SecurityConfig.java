@@ -1,6 +1,7 @@
 package chat.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
@@ -15,6 +16,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.httpBasic();
         http.authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS, "**").permitAll()
                 .antMatchers("/sign/login").hasAnyRole("GENERAL_USER")
                 .antMatchers("/testCredential").hasAnyRole("GENERAL_USER")
                 .anyRequest().permitAll();
