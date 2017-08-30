@@ -1,0 +1,15 @@
+
+<h3>Chat window</h3>
+<div *ngIf="friend">
+  <h2>Chat with {{friend.nickname}} ...</h2> 
+  <button (click)="showFriendDetail()">View Details of {{friend.name}}.</button>
+  <div>
+    <label>Message History</label>
+    <br/>
+    <label>{{messageHistory}}</label>
+  </div>
+  <div>
+    <input [(ngModel)]="inputMessage" placeholder="please input yout message..." />
+  </div>
+  <button (click)="sendMessage()">Send</button>
+</div>

@@ -1,6 +1,6 @@
 -- Create message table --
 
-CREATE TABLE `message` (
+CREATE TABLE `Message` (
   `MessageID` int(32) NOT NULL AUTO_INCREMENT COMMENT 'ID of message',
   `SenderCode` int(16) NOT NULL COMMENT 'ID of sender',
   `RecieverCode` int(16) NOT NULL COMMENT 'ID of reciever',

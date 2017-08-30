@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="team.ziz.chat.dao.IUserRelationDao">
+   <select id="getFriendList" resultType="team.ziz.chat.model.User" >
+      SELECT *
+      FROM UserRelation as R left join User as U on R.FollowerID = U.UserID
+      WHERE R.SponsorID = #{sponsorID};
+   </select>
+
+    <select id="getByID" resultType="team.ziz.chat.model.User" >
+        SELECT * FROM user WHERE UserID = #{userID};
+    </select>
+
+    <select id="selectPw" resultType="String">
+        SELECT Password FROM user WHERE UserID = #{userID};
+    </select>
+</mapper>
+

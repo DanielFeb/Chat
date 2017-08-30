@@ -1,6 +1,6 @@
 -- Create user information table --
 
-CREATE TABLE `user` (
+CREATE TABLE `User` (
   `UserID` int(32) NOT NULL AUTO_INCREMENT COMMENT 'Inner unique ID of user ',
   `Nickname` varchar(20) NOT NULL COMMENT 'Nickname of user',
   `Password` varchar(16) NOT NULL COMMENT 'Password of user',
