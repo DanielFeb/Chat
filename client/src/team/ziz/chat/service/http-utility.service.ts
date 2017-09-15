@@ -1,6 +1,6 @@
 import { Injectable }       from '@angular/core';
 
-import { Headers, Http }    from '@angular/http';
+import { Headers, Http, RequestOptionsArgs }    from '@angular/http';
 
 import { SERVER_URL }       from '../config/server-config';
 
@@ -9,6 +9,13 @@ export class HttpUtility {
     public headers = new Headers({'Content-Type': 'application/json'});
     public serverURL = SERVER_URL;
     constructor () {
+    }
+
+    public get requestOptionsArgs (): RequestOptionsArgs {
+        return {
+            headers: this.headers,
+            withCredentials: true
+        };
     }
 
     public setAuthHeader(userid: string, password: string) {

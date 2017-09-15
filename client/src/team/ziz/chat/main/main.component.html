@@ -1,0 +1,20 @@
+<div style="width:30%; float:left">
+  <h3>Friend List</h3>
+  <ul class="friends">
+      <li *ngFor="let stack of friendMessageStacks"
+          [class.selected]="stack === selectedStack"
+          (click)="onSelect(stack)">
+          <span class="badge">{{stack.friend.userID}}</span> {{stack.friend.nickname}} <div style="float: right;"><span class="badge">{{stack.messagesUnRead.length}}</span></div>
+      </li>
+  </ul>
+</div>
+
+<div style="width:60%; float:left" *ngIf=selectedStack >
+  <h2>Chat with {{selectedStack.friend.nickname}} ...</h2> 
+  <div class="chat-div" id="chat_div">
+  </div>
+  <div>
+    <input [(ngModel)]="inputMessage" placeholder="please input yout message..." />
+  </div>
+  <button (click)="sendMessage()">Send</button>
+</div>

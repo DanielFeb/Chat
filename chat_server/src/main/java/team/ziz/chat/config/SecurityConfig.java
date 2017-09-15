@@ -17,6 +17,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic();
         http.authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "**").permitAll()
+                //.antMatchers("/minchat/**").permitAll()
                 .antMatchers("/sign/login").hasAnyRole("GENERAL_USER")
                 .antMatchers("/testCredential").hasAnyRole("GENERAL_USER")
                 .anyRequest().permitAll();

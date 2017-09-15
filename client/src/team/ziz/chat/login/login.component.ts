@@ -30,6 +30,9 @@ export class LoginComponent {
                     this.router.navigate(['/friends']);
                 }
                 console.log(loggedin);
-            });
+
+                this.signService.greet('lalala');
+            }
+        );
     }
 }

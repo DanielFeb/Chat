@@ -25,7 +25,9 @@
 
       // other libraries
       'rxjs':                      'npm:rxjs',
-      'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js'
+      'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js',
+      'sockjs-client': 'npm:sockjs-client/dist/sockjs.js',
+      'jquery': 'npm:jquery/dist/jquery.js'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -38,6 +40,10 @@
         }
       },
       rxjs: {
+        defaultExtension: 'js'
+      },
+      'angular2-in-memory-web-api': {
+        main: './index.js',
         defaultExtension: 'js'
       }
     }

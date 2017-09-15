@@ -6,14 +6,12 @@ import { HttpModule }           from '@angular/http';
 import { AppRoutingModule }     from './app-routing.module';
 
 import { AppComponent }             from './app.component';
-import { FriendsComponent }         from './friend-list/friends.component';
-import { FriendDetailComponent }    from './friend-detail/friend-detail.component';
-import { ChatComponent }            from './chat/chat.component';
+import { MainComponent }            from './main/main.component';
 import { LoginComponent }           from './login/login.component';
 
-import { FriendService }            from './service/friend-list.service';
+import { FriendService }            from './service/friend.service';
 import { SignService }              from './service/sign.service';
-import { PersistentConnection }     from './service/persistent-connection.service';
+import { ChatService }              from './service/chat.service';
 import { HttpUtility }              from './service/http-utility.service';
 
 @NgModule({
@@ -25,16 +23,14 @@ import { HttpUtility }              from './service/http-utility.service';
     ],
     declarations: [
         AppComponent,
-        ChatComponent,
-        FriendsComponent,
-        FriendDetailComponent,
+        MainComponent,
         LoginComponent
     ],
     bootstrap:    [ AppComponent ],
     providers:    [
         FriendService,
         SignService,
-        PersistentConnection,
+        ChatService,
         HttpUtility
     ],
 })

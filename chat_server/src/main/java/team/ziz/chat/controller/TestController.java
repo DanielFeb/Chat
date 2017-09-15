@@ -1,5 +1,7 @@
 package team.ziz.chat.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.web.bind.annotation.*;
 
 import team.ziz.chat.model.User;
@@ -10,7 +12,7 @@ import team.ziz.chat.model.User;
 @RestController
 public class TestController {
     @RequestMapping(value = "/greet", method = RequestMethod.GET)
-    public String greet(@RequestParam String username) {
+    public String greet(HttpSession session, @RequestParam String username) {
         return "Hello " + username + "!";
     }
 

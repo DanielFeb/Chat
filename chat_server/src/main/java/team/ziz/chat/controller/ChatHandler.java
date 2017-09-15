@@ -5,18 +5,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
+import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
 
 import team.ziz.chat.model.Message;
+import team.ziz.chat.model.User;
 import team.ziz.chat.utils.JsonConverter;
-import team.ziz.chat.utils.SessionService;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.HashMap;
+
+import javax.servlet.http.HttpSession;
 
 @Component
 public class ChatHandler implements WebSocketHandler {
-    @Autowired
-    private SessionService sessionService;
     private Logger log = LoggerFactory.getLogger(ChatHandler.class);
 
     private static final int SYSTEM_ID = -1;
@@ -25,23 +28,33 @@ public class ChatHandler implements WebSocketHandler {
 
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         System.out.println("ConnectionEstablished");
-        log.debug("ConnectionEstablished");
-        sessionService.isUserLoggedIn();
-        Integer id = users.size();
+        User currentUser = getSessionUser(session);
+        if (currentUser == null) {
+            System.out.println("User is null!");
+            return;
+        } 
+        Integer id = currentUser.getUserID();
         users.put(id, session);
         String sessionId = session.getId();
-        String msg = "connect, your id is " + id + ", and your session id is" + sessionId + " .";
+        String msg = "Connectted, your id is " + id + ", and your session id is" + sessionId + " .";
 
-        this.sendMessage(new Message(SYSTEM_ID, id.intValue(), msg));
+        this.sendMessage(new Message(SYSTEM_ID, id.intValue(), msg, Calendar.getInstance().getTime().getTime()));
     }
 
-    public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
-        // Class cls = message.getPayload().getClass();
-        String json = message.getPayload().toString();
+    public void handleMessage(WebSocketSession session, WebSocketMessage<?> rawMessage) throws Exception {
+        String json = rawMessage.getPayload().toString();
         System.out.println("handleMessage" + json);
         log.debug("handleMessage" + json);
         // sendMessageToUsers();
-        this.sendMessage(this.dewrapMessage(json));
+        Message message = this.dewrapMessage(json);
+        //echo
+        if (message.getRecieveUserID() == SYSTEM_ID) {
+            message.setRecieveUserID(message.getSendUserID());
+            message.setSendUserID(SYSTEM_ID);
+            message.setTextMessage("echo " + message.getTextMessage());
+            message.setSendTime(Calendar.getInstance().getTime().getTime());
+            this.sendMessage(message);
+        }
     }
 
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
@@ -92,5 +105,11 @@ public class ChatHandler implements WebSocketHandler {
             json = "internal server error!";
         }
         return new TextMessage(json);
+    }
+
+    private User getSessionUser(WebSocketSession session) {
+        System.out.println(session.getAttributes().get(HttpSessionHandshakeInterceptor.HTTP_SESSION_ID_ATTR_NAME));
+        User currentUser = (User) session.getAttributes().get(User.class.getName());
+        return currentUser;
     }
 }

@@ -28,6 +28,12 @@ public class UserRelationController {
         if (!this.sessionService.isUserLoggedIn()){
             return null;
         }
-        return this.userRelationService.getFriendList();
+        List<User> friends = this.userRelationService.getFriendList();
+        // hard code, add system
+        User sysUser = new User();
+        sysUser.setUserID(-1);
+        sysUser.setNickname("System");
+        friends.add(0, sysUser);
+        return friends;
     }
 }

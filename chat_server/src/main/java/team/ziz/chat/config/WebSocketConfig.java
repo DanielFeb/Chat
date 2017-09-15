@@ -5,16 +5,22 @@ import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
 
 import team.ziz.chat.controller.ChatHandler;
 
-//@Configuration
-//@EnableWebSocket
+@Configuration
+@EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-       registry.addHandler(myHandler(), "/minchat").setAllowedOrigins("http://127.0.0.1");
+       registry.addHandler(myHandler(), "/minchat")
+           .addInterceptors(new HttpSessionHandshakeInterceptor())
+           .setAllowedOrigins("*");
 
-       registry.addHandler(myHandler(), "/minchat/sockjs").setAllowedOrigins("http://127.0.0.1").withSockJS();
+       registry.addHandler(myHandler(), "/minchat/sockjs")
+           .addInterceptors(new HttpSessionHandshakeInterceptor())
+           .setAllowedOrigins("*")
+           .withSockJS();
    }
 
    public WebSocketHandler myHandler() {

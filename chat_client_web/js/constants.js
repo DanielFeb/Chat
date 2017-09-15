@@ -1,1 +1,0 @@
-var serverUrl = "http://localhost:7777/";

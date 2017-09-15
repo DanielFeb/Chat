@@ -1,5 +1,7 @@
 package team.ziz.chat.controller.sign;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,8 +26,12 @@ public class SignController {
     }
 
     @RequestMapping(value = "/sign/login", method = RequestMethod.GET)
-    public User login() {
-        return sessionService.getSessionUser();
+    public User login(HttpSession session) {
+        User user = sessionService.getSessionUser();
+        session.setAttribute(User.class.getName(), user);
+        System.out.println("Session id:" + session.getId());
+        User tmp = (User) session.getAttribute(User.class.getName());
+        return user;
     }
 
 }
