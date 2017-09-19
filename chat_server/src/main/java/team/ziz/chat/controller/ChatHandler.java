@@ -53,8 +53,8 @@ public class ChatHandler implements WebSocketHandler {
             message.setSendUserID(SYSTEM_ID);
             message.setTextMessage("echo " + message.getTextMessage());
             message.setSendTime(Calendar.getInstance().getTime().getTime());
-            this.sendMessage(message);
         }
+        this.sendMessage(message);
     }
 
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
