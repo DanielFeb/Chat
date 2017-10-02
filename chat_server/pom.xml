@@ -4,10 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ziz</groupId>
-    <artifactId>team.ziz.chat</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <groupId>team.ziz.chat</groupId>
+    <artifactId>chat</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -19,6 +19,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
+        <start-class>team.ziz.chat.ChatServer</start-class>
     </properties>
 
     <dependencies>
@@ -89,6 +90,7 @@
         </dependency>
         
     </dependencies>
+    
     <build>
         <resources>
             <resource>
