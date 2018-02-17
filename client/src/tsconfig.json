@@ -1,5 +1,6 @@
 {
   //ignore this file
+  //help reading the codes in IDE
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
