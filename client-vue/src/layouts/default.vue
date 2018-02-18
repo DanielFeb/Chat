@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container-fluid gray-background">
     <nuxt/>
   </div>
 </template>
@@ -15,7 +15,10 @@ html {
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
 }
-
+.gray-background {
+  background-color: gray;
+  height: 100vh
+}
 *, *:before, *:after {
   box-sizing: border-box;
   margin: 0;
