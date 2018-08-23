@@ -1,41 +1,65 @@
+const parseArgs = require("minimist")
+const argv = parseArgs(process.argv.slice(2), {
+  alias: {
+    H: "hostname",
+    p: "port"
+  },
+  string: ["H"],
+  unknown: parameter => false
+})
+
+const port =
+  argv.port ||
+  process.env.PORT ||
+  process.env.npm_package_config_nuxt_port ||
+  "3000"
+const host =
+  argv.hostname ||
+  process.env.HOST ||
+  process.env.npm_package_config_nuxt_host ||
+  "localhost"
 module.exports = {
   srcDir: 'src/',
-  /*
-  ** Headers of the page
-  */
+  env: {
+    baseUrl:
+      process.env.BASE_URL ||
+      `http://${host}:${port}`
+  },
   head: {
-    title: 'Vue client for chat',
+    title: "tt1",
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Nuxt.js project' }
+      { charset: "utf-8" },
+      {
+        name: "viewport",
+        content:
+          "width=device-width, initial-scale=1"
+      },
+      {
+        hid: "description",
+        name: "description",
+        content: "Nuxt.js project"
+      }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      {
+        rel: "icon",
+        type: "image/x-icon",
+        href: "/favicon.ico"
+      }
     ]
   },
   /*
-  ** Customize the progress bar color
+  ** Customize the progress-bar color
   */
-  loading: { color: '#3B8070' },
-  css: ['@@node_modules/bootstrap/dist/css/bootstrap.min.css'],
+  loading: { color: "#3B8070" },
   /*
   ** Build configuration
   */
-  build: {
-    extend(config) {
-      // Add TypeScript loader
-      config.module.rules.push({
-        test: /\.ts$/,
-        loader: 'ts-loader'
-      })
-      // Add TypeScript loader for vue files
-      const vueLoader = config.module.rules.find(r => r.loader === 'vue-loader')
-      if (vueLoader) {
-        vueLoader.options.loaders.ts = 'ts-loader?{"appendTsSuffixTo":["\\\\.vue$"]}'
-      }
-    },
-    vendor: ['axios', 'iview', 'gsap', 'vuex-class', 'nuxt-class-component']
-  },
-  modules: []
+  css: ["@@node_modules/bootstrap/dist/css/bootstrap.min.css"],
+  build: {},
+  modules: [
+    "@nuxtjs/axios",
+    "~/modules/typescript.js"
+  ],
+  axios: {}
 }

@@ -17,27 +17,7 @@ import Component from 'vue-class-component'
 import { Prop } from 'vue-property-decorator'
 import { emit } from 'cluster';
 
-import Friend from '@/model/friend'
-import Message from '@/model/message'
-
-export class MessageStack {
-
-  public isActive: Boolean
-  public messages: Message[]
-  public readIndex: number
-  public cacheMessage: String
-
-  constructor (public friend: Friend) {
-    this.messages = []
-    this.isActive = false
-    this.readIndex = -1
-    this.cacheMessage = ''
-  }
-
-  public get numUnread () {
-    return this.messages.length - 1 - this.readIndex;
-  }
-}
+import MessageStack from '@/model/message-stack'
 
 @Component
 export default class FriendItem extends Vue {

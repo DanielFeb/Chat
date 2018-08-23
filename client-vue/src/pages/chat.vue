@@ -1,42 +1,47 @@
 <template>
-<div class ="container">
-  <div class="row chat-container">
-    <div id="friend-list" class="friend-list col-md-4">
-      <div class="container">
-        <h2 class="subtitle">
-          Friend list
-        </h2>
-        <hr>
-        <friend-item
-        v-for="(messageStack, index) in messageStacks" 
-        v-bind:key="index"
-        v-bind:messageStack="messageStack"
-        v-on:selectFriend="select"></friend-item>
+  <div class="row h-100">
+    <div class="d-none d-sm-none d-md-block col-md-1"></div>
+    <div class="col-sm-12e col-md-10 align-middle h-100">
+      <div class="row h-100">
+        <div id="friend-list" class="friend-list col-md-4 d-none d-sm-none d-md-block">
+          <div class="container">
+            <h2 class="subtitle">
+              Friend list <nuxt-link to="/login">Login</nuxt-link>
+            </h2>
+            <hr>
+            <friend-item
+              v-for="(messageStack, index) in messageStacks" 
+              v-bind:key="index"
+              v-bind:messageStack="messageStack"
+              v-on:selectFriend="select">
+            </friend-item>
+          </div>
+        </div>
+        <div id="chat-window-div" class="chat-window col-md-8">
+          <div class="title-container">
+            <h2 class="subtitle">
+              {{ titleOfChat }}
+            </h2>
+          </div>
+          <hr>
+          <div v-show="currentFriendMessageStack !== null">
+            <div id="messages-div" class="messages-container">
+              <message-item v-for="(message, index) in messages"
+              v-bind:key="index"
+              v-bind:message="message"
+              v-bind:currentUser="currentUser"></message-item>
+            </div>
+            <hr>
+            <div id="input-div" class="input-container">
+              <textarea id="input" v-model="inputMessage" class="container-fluid input" />
+              <button class="send-button" @click="send">Send</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div id="chat-window-div" class="chat-window col-md-8">
-      <div class="title-container">
-        <h2 class="subtitle">
-          {{ titleOfChat }}
-        </h2>
-      </div>
-      <hr>
-      <div v-show="currentFriendMessageStack !== null">
-        <div id="messages-div" class="messages-container">
-          <message-item v-for="(message, index) in messages"
-          v-bind:key="index"
-          v-bind:message="message"
-          v-bind:currentUser="currentUser"></message-item>
-        </div>
-        <hr>
-        <div id="input-div" class="input-container">
-          <textarea id="input" v-model="inputMessage" class="container-fluid input" />
-          <button class="send-button" @click="send">Send</button>
-        </div>
-      </div>
-    </div>
+    <div class="d-none d-sm-none d-md-block col-md-1"></div>
   </div>
-</div>
 </template>
 
 <script lang="ts">
@@ -44,12 +49,13 @@ import Vue from 'vue'
 import Component from 'nuxt-class-component'
 
 import AppLogo from '@/components/AppLogo.vue'
-import FriendItem, { MessageStack } from '@/components/FriendItem.vue'
+import FriendItem from '@/components/FriendItem.vue'
 import MessageItem from '@/components/MessageItem.vue'
 
 import Friend from '@/model/friend'
-import User from '@/model/User'
+import User from '@/model/user'
 import Message from '@/model/message'
+import MessageStack from '@/model/message-stack'
 
 @Component({
   components: {
@@ -66,7 +72,7 @@ export default class Chat extends Vue {
 
   currentUser: User = { userID: 1, password: '' }
 
-  inputMessage: String = ''
+  inputMessage: string = ''
 
   get messages () {
     if (this.currentFriendMessageStack) {
@@ -150,9 +156,6 @@ export default class Chat extends Vue {
 </script>
 
 <style>
-.chat-container {
-  height: 90vh;
-}
 .title-container {
   height: 5vh;
 }

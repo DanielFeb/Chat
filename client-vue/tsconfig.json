@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "es5",
-      "es6"
-    ],
+    "lib": ["dom", "es2015"],
     "module": "es2015",
     "moduleResolution": "node",
     "experimentalDecorators": true,
@@ -16,12 +12,10 @@
     "suppressImplicitAnyIndexErrors": true,
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
-      "~/*" : ["src/*"],
-      "@/*": ["src/*"],
-      "~store": ["./.nuxt/store"],
-      "~router": ["./.nuxt/router"]
+      "~/*": ["./*"],
+      "@/*": ["src/*"]
     }
   }
 }

@@ -1,5 +1,8 @@
 <template>
-  <div class="container-fluid gray-background">
+  <div class="container-fluid gray-background main-container">
+    <div class="row">
+      <div class="d-none d-sm-none d-md-block placeholder-container"></div>
+    </div>
     <nuxt/>
   </div>
 </template>
@@ -15,8 +18,16 @@ html {
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
 }
+.main-container {
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.placeholder-container {
+  height: 0vh;
+}
 .gray-background {
-  background-color: gray;
   height: 100vh
 }
 *, *:before, *:after {
