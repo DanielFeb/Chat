@@ -19,14 +19,14 @@ const host =
   process.env.npm_package_config_nuxt_host ||
   "localhost"
 module.exports = {
-  srcDir: 'src/',
+  srcDir: 'src/indi/daniel/chat',
   env: {
     baseUrl:
       process.env.BASE_URL ||
       `http://${host}:${port}`
   },
   head: {
-    title: "tt1",
+    title: "Chat",
     meta: [
       { charset: "utf-8" },
       {
