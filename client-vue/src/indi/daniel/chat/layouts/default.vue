@@ -18,6 +18,7 @@ html {
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
 }
+
 .main-container {
   height: 100vh;
   justify-content: center;

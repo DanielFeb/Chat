@@ -1,5 +1,5 @@
 <template>
-  <div class="row" style="margin-left: auto; margin-right: auto;">
+  <div class="row" >
     <div class="col-md-4">{{ label }} </div>
     <div class="col-md-4"><input v-bind:type="type" v-bind:value="fieldValue" v-on:input="onInput"></div>
   </div>

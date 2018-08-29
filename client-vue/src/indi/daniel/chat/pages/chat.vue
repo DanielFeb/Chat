@@ -1,13 +1,13 @@
 <template>
-  <div class="row h-100">
-    <div class="d-none d-sm-none d-md-block col-md-1"></div>
-    <div class="col-sm-12e col-md-10 align-middle h-100">
+  <div class="row justify-content-md-center h-100">
+    <div class="col-sm-12e col-md-10 align-middle">
       <div class="row h-100">
         <div id="friend-list" class="friend-list col-md-4 d-none d-sm-none d-md-block">
           <div class="container">
             <h2 class="subtitle">
-              Friend list <nuxt-link to="/login">Login</nuxt-link>
+              Friend list
             </h2>
+            <a v-on:click="signOut">sign out</a>
             <hr>
             <friend-item
               v-for="(messageStack, index) in messageStacks" 
@@ -40,7 +40,6 @@
         </div>
       </div>
     </div>
-    <div class="d-none d-sm-none d-md-block col-md-1"></div>
   </div>
 </template>
 
@@ -52,10 +51,13 @@ import AppLogo from '@/components/AppLogo.vue'
 import FriendItem from '@/components/FriendItem.vue'
 import MessageItem from '@/components/MessageItem.vue'
 
-import Friend from '@/model/friend'
-import User from '@/model/user'
-import Message from '@/model/message'
-import MessageStack from '@/model/message-stack'
+import Friend from '../model/friend'
+import User from '../model/user'
+import Message from '../model/message'
+import MessageStack from '../model/message-stack'
+
+import AuthenticationService from '../service/authentication.service'
+import ChatService from '../service/chat.service'
 
 @Component({
   components: {
@@ -68,9 +70,9 @@ export default class Chat extends Vue {
 
   messageStacks: MessageStack[] = []
 
-  currentFriendMessageStack: MessageStack | null  = null
+  currentFriendMessageStack: MessageStack | null = null
 
-  currentUser: User = { userID: 1, password: '' }
+  currentUser: User
 
   inputMessage: string = ''
 
@@ -88,7 +90,7 @@ export default class Chat extends Vue {
     return ""
   }
 
-  select(messageStack: MessageStack) {
+  select (messageStack: MessageStack) {
     if (this.currentFriendMessageStack) {
       this.currentFriendMessageStack.isActive = false
       this.currentFriendMessageStack.cacheMessage = this.inputMessage
@@ -99,58 +101,68 @@ export default class Chat extends Vue {
   }
 
   send () {
-    if(this.currentFriendMessageStack && this.inputMessage != '') {
+    if(this.currentFriendMessageStack && this.inputMessage !== '') {
       let message: Message = {
         sendUserID: this.currentUser.userID,
         recieveUserID: this.currentFriendMessageStack.friend.userID,
         textMessage: this.inputMessage,
-        sendTime: 3214124124,
+        sendTime: 3214124124
       } as Message;
+
+      ChatService.sendMessage(message)
       this.currentFriendMessageStack.messages.push(message)
       this.inputMessage = ''
     }
   }
 
+  signOut() {
+    AuthenticationService.signOut()
+    this.$router.replace('/login')
+  }
+
   created() {
-    // Mock data
-    this.messageStacks = [
-      new MessageStack({
-        nickname: 'daniel',
-        iconUrl: 'test'
-      }),
-      new MessageStack({
-        nickname: 'sally',
-        iconUrl: 'test1'
-      }),
-      new MessageStack({
-        nickname: 'mona',
-        iconUrl: 'test2'
-      })
-    ]
-    this.messageStacks[0].messages.push({
-    sendUserID: 1,
-    recieveUserID: 2,
-    textMessage: "test mesage",
-    sendTime: 213123
-    })
-    this.messageStacks[0].messages.push({
-    sendUserID: 2,
-    recieveUserID: 1,
-    textMessage: "test mesage2",
-    sendTime: 213123
-    })
-    this.messageStacks[0].messages.push({
-    sendUserID: 1,
-    recieveUserID: 2,
-    textMessage: "test mesage3",
-    sendTime: 213123
-    })
-    this.messageStacks[0].messages.push({
-    sendUserID: 1,
-    recieveUserID: 2,
-    textMessage: "test mesage4",
-    sendTime: 213123
-    })
+    if (AuthenticationService.isUserLoggedIn()) {
+      this.currentUser = AuthenticationService.currentUser
+
+      let onOpenFunc = (messageStacks: MessageStack[]) => {
+        this.messageStacks = messageStacks
+      }
+
+      let onMessageFunc = (message: Message) => {
+          this.pushRecievedMessage(message)
+      }
+
+      let onCloseFunc = (event: CloseEvent) => {
+
+      }
+      ChatService.start(onOpenFunc, onMessageFunc, onCloseFunc)
+    }
+    else {
+      this.$router.replace('/login')
+    }
+  }
+
+  getMessageStackByFriendId (firendId: number): MessageStack | undefined {
+    let theMessageStack = this.messageStacks.find(
+      (value) => {
+        return value.friend.userID === firendId
+      }
+    )
+    return theMessageStack
+  }
+
+  pushSentMessage (message: Message) {
+    let theMessageStack = this.getMessageStackByFriendId(message.recieveUserID)
+    if (theMessageStack !== undefined) {
+      theMessageStack.messages.push(message)
+    }
+  }
+
+  pushRecievedMessage (message: Message) {
+    let theMessageStack = this.getMessageStackByFriendId(message.sendUserID)
+    if (theMessageStack !== undefined) {
+      theMessageStack.messages.push(message)
+    }
   }
 }
 </script>

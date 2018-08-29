@@ -1,5 +1,5 @@
-import Message from './message'
-import Friend from './friend'
+import Message from '../model/message'
+import Friend from '../model/friend'
 
 export default class MessageStack {
 

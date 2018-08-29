@@ -1,5 +1,5 @@
-import Friend from './friend'
+import Friend from '../model/friend'
 
 export default interface User extends Friend {
-  password?: string
+  password: string
 }
